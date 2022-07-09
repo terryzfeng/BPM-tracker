@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPM Detector</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- Library Scripts -->
+    <script src="./library/p5.js"></script>
+    <script src="./library/p5.sound.js"></script>
+</head>
+
+<body>
+
+    <h1>BPM detector</h1>
+    </br></br>
+    <section class="mainsect">
+        <div class="form">
+            <form>
+                <label>Upload Audio File<br /><br />
+                    <input type="file" class="profile-aud">
+                </label>
+                <button type="submit">Upload</button>
+            </form>
+            <audio class="aud" id="sound" controls></audio>
+        </div>
+        <div id="mainsectcanvas"></div>
+    </section>
+
+
+
+    <!-- Player -->
+    <script src="./player.js"></script>
+
+    <!-- BPM -->
+    <script src="./utils.js"></script>
+    <script src="./sketch.js"></script>
+</body>
+
+</html>

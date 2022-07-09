@@ -1,0 +1,102 @@
+.mainsect{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    grid-auto-rows: minmax(100px, auto);
+    margin-left: -25%;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#player{
+    align-self: flex-end;
+    margin-right: 1%;
+}
+
+#mainsectcanvas{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    visibility: hidden;
+}
+
+h1 {
+    margin-top: 2%;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 180%;
+    color: #800080;
+    text-shadow: 1px 1px 4px rgb(247, 247, 247);
+    text-align: center;
+}
+
+
+form,
+.header {
+    width: 190px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border: 2px dotted purple;
+}
+
+input,
+button {
+    width: 175px;
+    height: 30px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 7px;
+    border: 2px solid purple;
+}
+
+input[type="file"] {
+    border: none;
+}
+
+button {
+    background-color: #800080;
+    color: white;
+    box-sizing: content-box;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+label {
+    padding: 10px;
+}
+
+.header {
+    flex-direction: row;
+    display: none;
+}
+
+
+figure h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: purple;
+    margin: 0;
+}
+
+audio {
+    width: 170px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+input:focus {
+    outline: none;
+    border: 3px dotted orange;
+}

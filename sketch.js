@@ -13,30 +13,42 @@ let fft;
 let peakDetect;
 let lastPeak;
 
-function preload() {
-  //song = loadSound("./90bpm.wav");
-  song = loadSound("./rock.mp3");
+var started = false;
+
+
+async function loadAudio() {
+  song = await fetch(loadSound(url));
 }
+
+// function preload() {
+//   //song = loadSound("./90bpm.wav");
+//   song = loadSound(url);
+// }
 
 function setup() {
-  createCanvas(400, 400);
+
+  loadAudio();
+  var myCanvas = createCanvas(screen.width * 0.40, screen.height * 0.30);
+  myCanvas.parent('mainsectcanvas')
   fft = new p5.FFT();
   song.loop();
-  peakDetect = new p5.PeakDetect(freq1,freq2,threshold,framesPerPeak);
+  peakDetect = new p5.PeakDetect(freq1, freq2, threshold, framesPerPeak);
   lastPeak = millis();
+
 }
 
+
 function mousePressed() {
-    if (song.isPlaying()) {
-        song.stop();
-    } else {
-        song.play();
-    }
+  if (song.isPlaying()) {
+    song.stop();
+  } else {
+    song.play();
+  }
 }
 
 function draw() {
   // Pulse white on the beat, then fade out with an inverse cube curve
-  background(128,128,128);
+  background(128, 128, 128);
   drawSpectrumGraph(0, 0, width, height);
   beatAnimation(0, 0, width, height);
 }
@@ -50,7 +62,7 @@ function calculateBPM() {
   if (peakBuffer.length >= bufferLength) {
     let average = 0;
     for (let i = 0; i < peakBuffer.length - 1; i++) {
-      average += millisToBPM(peakBuffer[i+1] - peakBuffer[i]) / bufferLength;
+      average += millisToBPM(peakBuffer[i + 1] - peakBuffer[i]) / bufferLength;
     }
     print(`AVERAGE BPM: ${average}`);
     peakBuffer.shift();
@@ -72,7 +84,7 @@ function beatAnimation(left, top, w, h) {
   }
   beginShape();
   fill(color(255));
-  ellipse(w/2,h/2,ellipseWidth, ellipseWidth);
+  ellipse(w / 2, h / 2, ellipseWidth, ellipseWidth);
   endShape();
 }
 
