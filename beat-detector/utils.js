@@ -8,5 +8,5 @@ function millisToBPM(millis) {
         bpm /= 2;
     }
 
-    return bpm;
+    return Math.round(bpm);
 }

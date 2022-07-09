@@ -48,15 +48,27 @@ function calculateBPM() {
   peakBuffer.push(peak);
 
   if (peakBuffer.length >= bufferLength) {
-    let average = 0;
+    let BPMs = [];
+
+    // BPM ranking algorithm
     for (let i = 0; i < peakBuffer.length - 1; i++) {
-      average += millisToBPM(peakBuffer[i+1] - peakBuffer[i]) / bufferLength;
+      BPMs.push(millisToBPM(peakBuffer[i+1] - peakBuffer[i]));
     }
-    print(`AVERAGE BPM: ${average}`);
-    peakBuffer.shift();
+    let rankBPM = BPMs.reduce((bpm, index) => {
+      bpm[index] = (bpm[index] || 0) + 1;
+      return bpm;
+    }, {});
+    print(rankBPM[0])
+
+
+    //print(`AVERAGE BPM: ${average}`);
+
+    // Start deleting saved peaks
+    if (peakBuffer.length >= 15) {
+      peakBuffer.shift();
+    }
   } else {
     print(`IMMEDIATE BPM: ${millisToBPM(peak - lastPeak)}`);
-    //print("tick");
   }
 
   lastPeak = peak;
