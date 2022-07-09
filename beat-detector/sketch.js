@@ -22,69 +22,78 @@ function setup() {
   createCanvas(400, 400);
   fft = new p5.FFT();
   song.loop();
-  peakDetect = new p5.PeakDetect(freq1,freq2,threshold,framesPerPeak);
+  peakDetect = new p5.PeakDetect(freq1, freq2, threshold, framesPerPeak);
   lastPeak = millis();
 }
 
 function mousePressed() {
-    if (song.isPlaying()) {
-        song.stop();
-    } else {
-        song.play();
-    }
+  if (song.isPlaying()) {
+    song.stop();
+  } else {
+    song.play();
+  }
 }
 
 function draw() {
   // Pulse white on the beat, then fade out with an inverse cube curve
-  background(128,128,128);
+  background(128, 128, 128);
   drawSpectrumGraph(0, 0, width, height);
   beatAnimation(0, 0, width, height);
 }
 
-const bufferLength = 8;
+const bufferMinLength = 8;
+const bufferMaxLength = 15;
 let peakBuffer = [];
 function calculateBPM() {
   let peak = millis();
   peakBuffer.push(peak);
 
-  if (peakBuffer.length >= bufferLength) {
+  if (peakBuffer.length >= bufferMinLength) {
     let BPMs = [];
 
     // BPM ranking algorithm
     for (let i = 0; i < peakBuffer.length - 1; i++) {
-      BPMs.push(millisToBPM(peakBuffer[i+1] - peakBuffer[i]));
+      BPMs.push(millisToBPM(peakBuffer[i + 1] - peakBuffer[i]));
     }
     let rankBPM = BPMs.reduce((bpm, index) => {
       bpm[index] = (bpm[index] || 0) + 1;
       return bpm;
     }, {});
-    print(rankBPM[0])
+    rankBPM = Object.entries(rankBPM);
+    // Sort ranks
+    let ranked = rankBPM.sort((a,b) => b[1] - a[1]);
+    let bpm = ranked.slice(0,2);
+    let result = 0;
+    if (bpm[0][1] != bpm[1][1]) {
+      result = parseInt(bpm[0][0]);
+    } else {
+      result = Math.round((parseInt(bpm[0][0]) + parseInt(bpm[1][0])) / 2.0);
+    }
 
-
-    //print(`AVERAGE BPM: ${average}`);
+    print(`RUNNING BPM: ${result}`);
 
     // Start deleting saved peaks
-    if (peakBuffer.length >= 15) {
+    if (peakBuffer.length >= bufferMaxLength) {
       peakBuffer.shift();
     }
   } else {
-    print(`IMMEDIATE BPM: ${millisToBPM(peak - lastPeak)}`);
+    print(`INSTANT BPM: ${millisToBPM(peak - lastPeak)}`);
   }
 
   lastPeak = peak;
 }
 
 function beatAnimation(left, top, w, h) {
-  peakDetect.update(fft)
+  peakDetect.update(fft);
   if (peakDetect.isDetected) {
     ellipseWidth = 50;
     calculateBPM();
   } else {
-    ellipseWidth *= .95;
+    ellipseWidth *= 0.95;
   }
   beginShape();
   fill(color(255));
-  ellipse(w/2,h/2,ellipseWidth, ellipseWidth);
+  ellipse(w / 2, h / 2, ellipseWidth, ellipseWidth);
   endShape();
 }
 
@@ -92,9 +101,8 @@ function beatAnimation(left, top, w, h) {
 function drawSpectrumGraph(left, top, w, h) {
   let spectrum = fft.analyze();
 
-
-  stroke('white');
-  fill('lightblue');
+  stroke("white");
+  fill("lightblue");
   strokeWeight(1);
 
   beginShape();
@@ -108,7 +116,7 @@ function drawSpectrumGraph(left, top, w, h) {
       //left + map(i, 0, spectrum.length, 0, w),
       // Distribute the spectrum values on a logarithmic scale
       // We do this because as you go higher in the spectrum
-      // the same perceptible difference in tone requires a 
+      // the same perceptible difference in tone requires a
       // much larger chang in frequency.
       left + map(log(i), 0, log(spectrum.length), 0, w),
       // Spectrum values range from 0 to 255
@@ -126,7 +134,7 @@ function drawSpectrumGraph(left, top, w, h) {
   // the mean_freq_index calculation is for the display.
   // centroid frequency / hz per bucket
   let mean_freq_index = centroid / (nyquist / spectrum.length);
-  stroke('red');
+  stroke("red");
   // convert index to x value using a logarithmic x axis
   let cx = map(log(mean_freq_index), 0, log(spectrum.length), 0, width);
   line(cx, 0, cx, h);
