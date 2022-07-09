@@ -1,20 +1,29 @@
-const avgWindow = 20.0;
+const avgWindow = 20;
 const threshold = 0.4;
+
+const freq1 = 20.0;
+const freq2 = 150.0;
+const framesPerPeak = 20;
+const peakThreshold = 0.05;
+
+let ellipseWidth = 10;
 
 let song;
 let fft;
-let beat;
+let peakDetect;
 let lastPeak;
 
 function preload() {
-  song = loadSound("./90bpm.wav");
+  //song = loadSound("./90bpm.wav");
+  song = loadSound("./rock.mp3");
 }
 
 function setup() {
   createCanvas(400, 400);
   fft = new p5.FFT();
   song.loop();
-  beat = millis();
+  peakDetect = new p5.PeakDetect(freq1,freq2,threshold,framesPerPeak);
+  lastPeak = millis();
 }
 
 function mousePressed() {
@@ -27,17 +36,53 @@ function mousePressed() {
 
 function draw() {
   // Pulse white on the beat, then fade out with an inverse cube curve
-  background(map(1 / pow((millis() - beat) / 1000 + 1, 3), 1, 0, 255, 100));
+  background(128,128,128);
   drawSpectrumGraph(0, 0, width, height);
+  beatAnimation(0, 0, width, height);
 }
 
-let runningAvg = 0;
+const bufferLength = 8;
+let peakBuffer = [];
+function calculateBPM() {
+  let peak = millis();
+  peakBuffer.push(peak);
+
+  if (peakBuffer.length >= bufferLength) {
+    let average = 0;
+    for (let i = 0; i < peakBuffer.length - 1; i++) {
+      average += millisToBPM(peakBuffer[i+1] - peakBuffer[i]) / bufferLength;
+    }
+    print(`AVERAGE BPM: ${average}`);
+    peakBuffer.shift();
+  } else {
+    print(`IMMEDIATE BPM: ${millisToBPM(peak - lastPeak)}`);
+    //print("tick");
+  }
+
+  lastPeak = peak;
+}
+
+function beatAnimation(left, top, w, h) {
+  peakDetect.update(fft)
+  if (peakDetect.isDetected) {
+    ellipseWidth = 50;
+    calculateBPM();
+  } else {
+    ellipseWidth *= .95;
+  }
+  beginShape();
+  fill(color(255));
+  ellipse(w/2,h/2,ellipseWidth, ellipseWidth);
+  endShape();
+}
+
 // Graphing code adapted from https://jankozeluh.g6.cz/index.html by Jan Koželuh
 function drawSpectrumGraph(left, top, w, h) {
   let spectrum = fft.analyze();
 
-  stroke('limegreen');
-  fill('darkgreen');
+
+  stroke('white');
+  fill('lightblue');
   strokeWeight(1);
 
   beginShape();
@@ -57,31 +102,15 @@ function drawSpectrumGraph(left, top, w, h) {
       // Spectrum values range from 0 to 255
       top + map(spectrum[i], 0, 255, h, 0)
     );
-
-    runningAvg += spectrum[i] / avgWindow;
-    if (i >= avgWindow) {
-      runningAvg -= spectrum[i] / avgWindow;
-    }
-    if (runningAvg > peak) {
-      peak = runningAvg;
-    }
   }
-
-  // any time there is a sudden increase in peak energy, call that a beat
-  if (peak > lastPeak * (1 + threshold)) {
-    print(`tick ${++i}`);
-    beat = millis();
-  }
-  lastPeak = peak;
 
   vertex(left + w, top + h);
   endShape(CLOSE);
+
   // this is the range of frequencies covered by the FFT
   let nyquist = 22050;
-
   // get the centroid (value in hz)
   let centroid = fft.getCentroid();
-
   // the mean_freq_index calculation is for the display.
   // centroid frequency / hz per bucket
   let mean_freq_index = centroid / (nyquist / spectrum.length);
