@@ -17,7 +17,8 @@ const getValuesFromInputs = () =>{
     document.querySelector('.aud').setAttribute('src', profileAudURL);
     url = profileAudURL;
     started = true;
-}
+    sound.play();
+  }
 
 document.querySelector('button').addEventListener('click', (e) => {
     e.preventDefault();

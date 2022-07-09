@@ -16,18 +16,14 @@ let lastPeak;
 var started = false;
 
 
-async function loadAudio() {
-  song = await fetch(loadSound(url));
-}
 
-// function preload() {
-//   //song = loadSound("./90bpm.wav");
-//   song = loadSound(url);
-// }
+function preload() {
+  //song = loadSound("./90bpm.wav");
+  song = loadSound(url);
+}
 
 function setup() {
 
-  loadAudio();
   var myCanvas = createCanvas(screen.width * 0.40, screen.height * 0.30);
   myCanvas.parent('mainsectcanvas')
   fft = new p5.FFT();
