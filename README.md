@@ -2,7 +2,7 @@
 
 This is a P5js web application that uses peak detection to determine BPM of songs in real time. 
 
-Check out the demo: [https://realtimebpm.netlify.app](https://realtimebpm.netlify.app)
+Check out the demo: [https://realtimebpm.netlify.app/](https://realtimebpm.netlify.app/)
 
 ![./images/repo/rtbpm.png](./images/repo/rtbpm.png)
 
