@@ -1,4 +1,5 @@
-let url;
+let url = "";
+let urlLoaded = false;
 
 const getValuesFromInputs = () => {
   const profileAud = document.querySelector('input.profile-aud').files[0];
@@ -16,7 +17,7 @@ const addInputToProfile = () => {
   const [profileAudURL] = convertInputValues();
   document.querySelector('.aud').setAttribute('src', profileAudURL);
   url = profileAudURL;
-  console.log(url);
+  urlLoaded = true;
   //sound.play();
 }
 
