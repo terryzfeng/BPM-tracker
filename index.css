@@ -22,10 +22,10 @@
 }
 
 h1 {
-    margin-top: 4%;
+    margin-top: 5%;
     color: #111;
     font-family: 'Helvetica Neue', sans-serif;
-    font-size: 80px;
+    font-size: 76px;
     font-weight: bold;
     letter-spacing: -1px;
     line-height: 1;
@@ -106,6 +106,7 @@ width: 70%;
 margin:auto;
 justify-content: center;
 align-items: flex-start;
+font-size: medium;
 }
 
 .description a{

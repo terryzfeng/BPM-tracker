@@ -59,7 +59,7 @@ function draw() {
   textSize(20);
   fill(0);
   noStroke();
-  text(`AVERAGE: ${Math.round(result)} BPM`, 20, 300);
+  text(`RUNNING: ${Math.round(result)} BPM`, 20, 300);
 }
 
 const bufferMinLength = 8;
