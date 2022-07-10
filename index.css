@@ -21,6 +21,10 @@
     align-items: center;
 }
 
+label {
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
 h1 {
     margin-top: 5%;
     color: #111;
