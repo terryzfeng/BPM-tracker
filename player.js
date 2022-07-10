@@ -23,7 +23,7 @@ const addInputToProfile = () => {
 
 document.querySelector('.upload').addEventListener('click', (e) => {
   e.preventDefault();
-  addInputToProfile();
+    addInputToProfile();
 });
 
 function enabledbtn(){
