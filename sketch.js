@@ -38,7 +38,7 @@ function mousePressed() {
 function draw() {
   if (urlLoaded) {
     print(url);
-    song = loadSound(url);
+    song = loadSound(url, blobUpload, error, loading);
     urlLoaded = false;
   }
   // Pulse white on the beat, then fade out with an inverse cube curve

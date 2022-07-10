@@ -10,3 +10,22 @@ function millisToBPM(millis) {
 
     return Math.round(bpm);
 }
+
+let myPromise = new Promise(function(resolve, reject) {
+    setTimeout(resolve, 1000);
+})
+function blobUpload() {
+    if (song != null && song.isLoaded()) {
+        let soundBlob = song.getBlob();
+        console.log("SUCCESS");
+    }
+}
+
+
+function error() {
+    print("ERROR - BAD UPLOAD")
+}
+
+function loading() {
+    print("LOADING....")
+}
