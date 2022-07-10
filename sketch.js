@@ -13,19 +13,17 @@ let fft;
 let peakDetect;
 let lastPeak;
 
-var started = false;
-
-
+//var started = false;
 
 function preload() {
   //song = loadSound("./90bpm.wav");
   song = loadSound(url);
 }
 
-function setup() {
 
+function setup() {
   var myCanvas = createCanvas(screen.width * 0.40, screen.height * 0.30);
-  myCanvas.parent('mainsectcanvas')
+  myCanvas.parent('mainsectcanvas');
   fft = new p5.FFT();
   song.loop();
   peakDetect = new p5.PeakDetect(freq1, freq2, threshold, framesPerPeak);
@@ -43,10 +41,12 @@ function mousePressed() {
 }
 
 function draw() {
+
   // Pulse white on the beat, then fade out with an inverse cube curve
   background(128, 128, 128);
   drawSpectrumGraph(0, 0, width, height);
   beatAnimation(0, 0, width, height);
+  
 }
 
 const bufferLength = 8;

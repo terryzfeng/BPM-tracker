@@ -14,17 +14,11 @@
     align-items: flex-end;
 }
 
-#player{
-    align-self: flex-end;
-    margin-right: 1%;
-}
-
 #mainsectcanvas{
     display: flex;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-   
 }
 
 h1 {
