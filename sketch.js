@@ -12,6 +12,7 @@ let song;
 let fft;
 let peakDetect;
 let lastPeak;
+let average = 0;
 
 //var started = false;
 
@@ -22,12 +23,17 @@ function setup() {
   fft = new p5.FFT();
   peakDetect = new p5.PeakDetect(freq1, freq2, threshold, framesPerPeak);
   lastPeak = millis();
+  createButtonPlay();
+}
 
+function createButtonPlay(){
+  button = createButton("Play!");
+  button.position(window.width*0.664,window.height*1.49);
 }
 
 
-function mousePressed() {
-  if (urlLoaded) {
+function moveButton() {
+  if (!urlLoaded) {
     if (song.isPlaying()) {
       song.stop();
     } else {
@@ -38,15 +44,25 @@ function mousePressed() {
 
 function draw() {
   if (urlLoaded) {
+    button.style('background-color', color(0, 204, 153));
     print(url);
     song = loadSound(url);
     urlLoaded = false;
   }
+  button.mouseClicked(moveButton);
   // Pulse white on the beat, then fade out with an inverse cube curve
   background(128, 128, 128);
   drawSpectrumGraph(0, 0, width, height);
   beatAnimation(0, 0, width, height);
-  
+
+
+  stroke(255,0,0);
+  strokeWeight(1);
+  rect(15,283,200,20)
+  textSize(20);
+  fill(0);
+  noStroke();
+  text(`AVERAGE: ${Math.round(average)} BPM`, 20, 300);
 }
 
 const bufferLength = 8;
@@ -54,9 +70,8 @@ let peakBuffer = [];
 function calculateBPM() {
   let peak = millis();
   peakBuffer.push(peak);
-
+  average = 0;
   if (peakBuffer.length >= bufferLength) {
-    let average = 0;
     for (let i = 0; i < peakBuffer.length - 1; i++) {
       average += millisToBPM(peakBuffer[i + 1] - peakBuffer[i]) / bufferLength;
     }
