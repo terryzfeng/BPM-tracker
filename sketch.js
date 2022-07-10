@@ -38,7 +38,10 @@ function screenResize(){
   
     if(windowWidth < 1270) {
         resizeCanvas(windowWidth * 0.50, windowHeight * 0.50);
-    } 
+        translate(windowWidth*0.018,windowHeight*0.1);
+    } else{
+        resizeCanvas(screen.width * 0.40, screen.height * 0.30);
+    }
 
 }
 
@@ -62,8 +65,9 @@ function draw() {
   beatAnimation(0, 0, width, height);
   stroke(255,0,0);
   strokeWeight(1);
+  fill(253);
   rect(15,278,200,30)
-  textSize(20);
+  textSize(18);
   fill(0);
   noStroke();
   text(`CURRENT: ${Math.round(result)} BPM`, 20, 300);
