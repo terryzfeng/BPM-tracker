@@ -10,8 +10,10 @@ filename = "BeatNet_Model.ml"
 model = pickle.load(open(filename, "rb"))
 
 
-@app.route('/analyze', methods=['POST'])
-def predict():
+@app.route('/bpm', methods=['GET', 'POST'])
+def bpm():
+    if flask.request.method == 'POST':
+         flask.request.files['messageFile']
 
     features = flask.request.get_json(force=True)['features']
     prediction = model.predict([features])[0, 0]
