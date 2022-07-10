@@ -135,7 +135,7 @@ button[disabled]{
 
 .play:hover{
    border-radius: 50px;
-   transition: 0.3s ease-in-out all;
+   transition: 0.6s ease-in-out all;
    font-size: 14px;
 }
 
