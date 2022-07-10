@@ -21,8 +21,12 @@ const addInputToProfile = () => {
   //sound.play();
 }
 
-document.querySelector('button').addEventListener('click', (e) => {
+document.querySelector('.upload').addEventListener('click', (e) => {
   e.preventDefault();
   addInputToProfile();
 });
+
+function enabledbtn(){
+  document.querySelector('.upload').disabled = false;
+}
 

@@ -20,11 +20,12 @@
         <div class="form">
             <form>
                 <label>Upload Audio File<br /><br />
-                    <input type="file" class="profile-aud">
+                    <input type="file" class="profile-aud" onchange="enabledbtn()">
                 </label>
-                <button class="upload" type="submit">Upload</button>
+                <button class="upload" type="submit" accept="audio/*" disabled>Upload</button>
             </form>
             <audio class="aud" id="sound"></audio>
+            <button class="play">Play</button>
         </div>
         <div id="mainsectcanvas"></div>
     </section>
