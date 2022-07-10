@@ -17,7 +17,7 @@ let result = 0;
 
 function setup() {
   print("setup")
-  var myCanvas = createCanvas(screen.width * 0.40, screen.height * 0.30);
+  var myCanvas = createCanvas(windowWidth * 0.40, windowHeight * 0.30);
   myCanvas.parent('mainsectcanvas');
   fft = new p5.FFT();
   peakDetect = new p5.PeakDetect(freq1, freq2, threshold, framesPerPeak);
@@ -38,9 +38,8 @@ function screenResize(){
   
     if(windowWidth < 1270) {
         resizeCanvas(windowWidth * 0.50, windowHeight * 0.50);
-        translate(windowWidth*0.018,windowHeight*0.1);
     } else{
-        resizeCanvas(screen.width * 0.40, screen.height * 0.30);
+        resizeCanvas(windowWidth * 0.40, windowHeight * 0.30);
     }
 
 }
@@ -66,11 +65,11 @@ function draw() {
   stroke(255,0,0);
   strokeWeight(1);
   fill(253);
-  rect(15,278,200,30)
+  rect(0,height-30.5,200,30)
   textSize(18);
   fill(0);
   noStroke();
-  text(`CURRENT: ${Math.round(result)} BPM`, 20, 300);
+  text(`CURRENT: ${Math.round(result)} BPM`, 10, height-10);
 }
 
 const bufferMinLength = 8;
