@@ -38,7 +38,6 @@ function screenResize(){
   
     if(windowWidth < 1270) {
         resizeCanvas(windowWidth * 0.50, windowHeight * 0.50);
-        translate(0,0)
     } 
 
 }
