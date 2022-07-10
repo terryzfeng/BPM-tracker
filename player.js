@@ -2,8 +2,8 @@ let url = "";
 let urlLoaded = false;
 
 const getValuesFromInputs = () => {
-  const profileAud = document.querySelector("input.profile-aud").files[0];
-  //document.querySelector('form').style.display = 'none';
+  const profileAud = document.querySelector('input.profile-aud').files[0];
+  document.querySelector('.upload').style.background = '#8c8c8c';
   return [profileAud];
 };
 
@@ -21,7 +21,12 @@ const addInputToProfile = () => {
   urlLoaded = true;
 };
 
-document.querySelector("button").addEventListener("click", (e) => {
+document.querySelector('.upload').addEventListener('click', (e) => {
   e.preventDefault();
   addInputToProfile();
 });
+
+function enabledbtn(){
+  document.querySelector('.upload').disabled = false;
+}
+
