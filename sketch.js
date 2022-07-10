@@ -34,12 +34,24 @@ function moveButton() {
   }
 }
 
+function screenResize(){
+  
+    if(windowWidth < 1270) {
+        resizeCanvas(windowWidth * 0.50, windowHeight * 0.50);
+        translate(windowWidth*0.018,windowHeight*0.1);
+    } else{
+        resizeCanvas(screen.width * 0.40, screen.height * 0.30);
+    }
+
+}
+
 document.querySelector('.play')
   .addEventListener('click',function(){
   moveButton();
   });
 
 function draw() {
+  screenResize();
   if (urlLoaded) {
     document.querySelector('.play').style.background = 'rgb(0,204,153)';
     print(url);
@@ -51,12 +63,11 @@ function draw() {
   background(128, 128, 128);
   drawSpectrumGraph(0, 0, width, height);
   beatAnimation(0, 0, width, height);
-
-
   stroke(255,0,0);
   strokeWeight(1);
-  rect(15,283,200,20)
-  textSize(20);
+  fill(253);
+  rect(15,278,200,30)
+  textSize(18);
   fill(0);
   noStroke();
   text(`CURRENT: ${Math.round(result)} BPM`, 20, 300);

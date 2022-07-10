@@ -30,6 +30,7 @@ h1 {
     letter-spacing: -1px;
     line-height: 1;
     text-align: center;
+    margin-bottom: 2%;
 }
 
 form,
@@ -106,10 +107,63 @@ width: 70%;
 margin:auto;
 justify-content: center;
 align-items: flex-start;
-font-size: medium;
+font-size: large;
+margin-bottom: 2%;
 }
 
 .description a{
     color: rgb(214, 20, 20);
 }
 
+.description a:hover{
+ color: rgb(0,204,153);
+}
+
+.upload:hover{
+    border-radius: 50px;
+    transition: 0.6s ease-in-out all;
+    font-size: 14px;
+}
+
+.upload:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.play:hover{
+   border-radius: 50px;
+   transition: 0.3s ease-in-out all;
+   font-size: 14px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0));
+}
+
+@media (max-width: 1270px) {
+    .mainsect{
+        display: flex;
+        flex-direction: column;
+        margin-left: 0%;
+    }
+
+    .form {
+        align-items: center;
+    }
+
+    #mainsectcanvas {
+        align-items: center;
+        justify-content: center;
+    }
+
+    h1{
+        font-size: 65px;
+    }
+
+
+    
+}
