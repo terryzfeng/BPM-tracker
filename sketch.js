@@ -66,11 +66,13 @@ function draw() {
   stroke(255,0,0);
   strokeWeight(1);
   fill(253);
-  rect(15,278,200,30)
+  //rect(15,278,200,30);
+  rect(windowWidth * .005,windowHeight * .21,200,30)
   textSize(18);
   fill(0);
   noStroke();
-  text(`CURRENT: ${Math.round(result)} BPM`, 20, 300);
+  //text(`CURRENT: ${Math.round(result)} BPM`, 20, 300);
+  text(`CURRENT: ${Math.round(result)} BPM`, windowWidth * 0.007, windowHeight * 0.230);
 }
 
 const bufferMinLength = 8;
