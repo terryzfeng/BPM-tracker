@@ -1,3 +1,7 @@
+// BeatNet Server
+const serverURL = 'http://127.0.0.1:9099/bpm';
+const testURL = 'http://127.0.0.1:9099/test';
+
 function millisToBPM(millis) {
     let bpm = 60000.0 / millis;
 
@@ -11,13 +15,34 @@ function millisToBPM(millis) {
     return Math.round(bpm);
 }
 
-let myPromise = new Promise(function(resolve, reject) {
-    setTimeout(resolve, 1000);
-})
+let im;
 function blobUpload() {
     if (song != null && song.isLoaded()) {
+        print("Loaded: 100%, Uploading...");
         let soundBlob = song.getBlob();
-        console.log("SUCCESS");
+        let formdata = new FormData();
+        formdata.append('soundBlob', soundBlob, 'audio.wav');
+        // Create POST Request to 
+        let httpsRequestOptions = {
+            method: "POST",
+            data: formdata,
+            headers: new Headers({
+                'Content-Type': 'multipart/form-data'
+            }),
+            mode: 'no-cors'
+        };
+        // Upload
+        httpDo( serverURL, httpsRequestOptions, 
+            function (response) { 
+                print("success")
+                print(response.data) 
+            },
+            function (error) {
+                print("fail")
+                print(error)
+            })
+        //httpDo('https://dog.ceo/api/breeds/image/random', "GET", function(response) {print(response)})
+        //httpDo(testURL, "POST", function(response) {print(response)})
     }
 }
 
@@ -26,6 +51,6 @@ function error() {
     print("ERROR - BAD UPLOAD")
 }
 
-function loading() {
-    print("LOADING....")
+function loading(num) {
+    print("LOADING: " + Math.round(num) + "%");
 }

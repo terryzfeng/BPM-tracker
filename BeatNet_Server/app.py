@@ -16,7 +16,9 @@ model = pickle.load(open(model_path, "rb"))
 @app.route('/bpm', methods=['POST'])
 def bpm():
     if flask.request.method == "POST":
-        file = flask.request.files['file']
+        files = flask.request.files
+        file = files.get('file')
+        #file = flask.request.files['file']
         print(file)
 
         if file:
@@ -27,6 +29,12 @@ def bpm():
 
         response = {"data": utils.npArrToList(output)}
         return flask.jsonify(response)
+
+
+@app.route('/test', methods=['POST'])
+def test():
+    if flask.request.method == "POST":
+        return flask.jsonify("success")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
